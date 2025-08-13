@@ -79,7 +79,7 @@ def display_treatment(treatment):
         st.write(treatment)
 
 # Streamlit 前端
-st.title("图片对比与病虫害治理方案（pHash版）")
+st.title("烟草病虫害诊断与治理方案")
 uploaded_file = st.file_uploader("上传图片", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
