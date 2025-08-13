@@ -51,6 +51,24 @@ def load_metadata():
         with open(METADATA_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     return {}
+    
+def display_treatment_info(disease_name):
+    """根据病害名称，从 metadata.json 中读取治理方案并展示"""
+    info = metadata.get(disease_name, {})
+    treatment = info.get("treatment", {})
+
+    if not treatment:
+        st.error("未找到该病害的治理方案。")
+        return
+
+    st.markdown(f"### 🩺 病害名称：{disease_name}")
+    st.markdown(f"**📄 描述：** {treatment.get('description', '无数据')}")
+    st.markdown(f"**🧪 农药有效成分：** {treatment.get('pesticide', '无数据')}")
+    st.markdown(f"**🏷 常用品牌：** {', '.join(treatment.get('brands', [])) if treatment.get('brands') else '无数据'}")
+    st.markdown(f"**💊 用量：** {treatment.get('dosage', '无数据')}")
+    st.markdown(f"**💧 用法：** {treatment.get('application_method', '无数据')}")
+    st.markdown(f"**⏳ 使用频率：** {treatment.get('frequency', '无数据')}")
+    st.markdown(f"**⛔ 安全间隔期(PHI)：** {treatment.get('PHI', '无数据')} 天")
 
 # 渲染治理方案
 def display_treatment(treatment):
@@ -74,7 +92,8 @@ if uploaded_file is not None:
     if score >= 0.5:
         st.success(f"匹配结果: {match_name}（相似度: {score:.2%}）")
         if match_name in metadata:
-            st.markdown("**治理方案:**")
+            display_treatment_info(match_name)
+            #st.markdown("**治理方案:**")
             display_treatment(metadata[match_name].get("treatment", "无数据"))
     elif score >= 0.4:
         st.warning(f"可能匹配: {match_name}（相似度: {score:.2%}，请人工确认）")
