@@ -99,6 +99,7 @@ if uploaded_file is not None:
         st.warning(f"可能匹配: {match_name}（相似度: {score:.2%}，请人工确认）")
         if match_name in metadata:
             st.markdown("**治理方案（需人工确认）:**")
+            display_treatment_info(match_name)
             display_treatment(metadata[match_name].get("treatment", "无数据"))
     else:
         st.error("未找到匹配图片（相似度低于40%）")
