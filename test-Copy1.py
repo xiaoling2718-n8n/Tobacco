@@ -94,7 +94,7 @@ if uploaded_file is not None:
         if match_name in metadata:
             display_treatment_info(match_name)
             #st.markdown("**治理方案:**")
-            display_treatment(metadata[match_name].get("treatment", "无数据"))
+            #display_treatment(metadata[match_name].get("treatment", "无数据"))
     elif score >= 0.4:
         st.warning(f"可能匹配: {match_name}（相似度: {score:.2%}，请人工确认）")
         if match_name in metadata:
